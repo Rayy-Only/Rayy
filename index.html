@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rayy-Frontend</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #13111C 0%, #201F2B 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        /* Floating shapes */
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            background: #7C3AED;
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: #A78BFA;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 15%;
+            width: 80px;
+            height: 80px;
+            background: #7C3AED;
+            clip-path: circle(50% at 50% 50%);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        .nav-name {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #A78BFA, #7C3AED, #A78BFA);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .profile-section {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .profile-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #7C3AED;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+            margin: 0 auto 2rem;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(124, 58, 237, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.3); }
+        }
+
+        .stats-card {
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .skill-percentage {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: rgba(124, 58, 237, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(to right, #A78BFA, #7C3AED);
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 5rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .timeline-event {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid #7C3AED;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(124, 58, 237, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #7C3AED;
+            transform: translateY(-3px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .testimonial-card {
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .service-card {
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(124, 58, 237, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(124, 58, 237, 0.2);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            background: rgba(124, 58, 237, 0.3);
+        }
+
+        .glow-btn {
+            background: linear-gradient(45deg, #A78BFA, #7C3AED);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .glow-btn:hover::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .glow-btn:hover {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .technologies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .tech-item:hover::after {
+            transform: rotate(45deg) translateY(100%);
+        }
+
+        .tech-item:hover {
+            background: rgba(124, 58, 237, 0.2);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #A78BFA, #7C3AED);
+            transform-origin: 0%;
+            z-index: 1000;
+            transform: scaleX(0);
+        }
+
+        /* Animasi untuk nav links */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #7C3AED;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Floating Shapes -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+
+    <!-- Original HTML content stays exactly the same -->
+    <nav class="fixed top-0 w-full bg-opacity-90 backdrop-filter backdrop-blur-lg z-50 bg-[#13111C]">
+        <div class="main-container py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="nav-name">Portofolio</h1>
+                <div class="hidden md:flex gap-8">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="section">
+            <div class="main-container">
+                <div class="profile-section">
+                    <div class="profile-circle">
+                        <img src="/api/placeholder/250/250" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <h1 class="text-4xl font-bold mb-4">Rayy</h1>
+                    <h2 class="text-xl text-purple-400 mb-6">Frontend Developer & UI/UX Designer</h2>
+                    
+                    <p class="text-gray-300 max-w-2xl mx-auto mb-8">
+                        Passionate about creating beautiful, functional, and user-centered digital experiences. 
+                        With 4+ years of experience in frontend development and UI/UX design.
+                    </p>
+
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-github text-white"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin text-white"></i></a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-dribbble text-white"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-behance text-white"></i>
+                        </a>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-8">
+                        <button class="glow-btn">Download CV</button>
+                        <button class="glow-btn bg-opacity-20">Contact Me</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="text-3xl font-bold text-purple-400">4+</h3>
+                        <p class="text-gray-300">Years Experience</p>
+                    </div>
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-3xl font-bold text-purple-400">50+</h3>
+                        <p class="text-gray-300">Projects Completed</p>
+                    </div>
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-3xl font-bold text-purple-400">30+</h3>
+                        <p class="text-gray-300">Happy Clients</p>
+                    </div>
+                    <div class="stats-card" data-aos="fade-up" data-aos-delay="400">
+                        <h3 class="text-3xl font-bold text-purple-400">15+</h3>
+                        <p class="text-gray-300">Awards Won</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <div class="main-container">
+                <h2 class="text-4xl font-bold mb-12 text-center" data-aos="fade-up">My Services</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-icon">
+                            <i class="fas fa-code text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Web Development</h3>
+                        <p class="text-gray-300">Custom websites and web applications built with modern technologies.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">UI/UX Design</h3>
+                        <p class="text-gray-300">User-centered design solutions that enhance user experience.</p>
+                    </div>
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon">
+                            <i class="fas fa-mobile-alt text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Responsive Design</h3>
+                        <p class="text-gray-300">Websites that work flawlessly across all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="main-container">
+                <h2 class="text-4xl font-bold mb-12 text-center" data-aos="fade-up">Technologies I Use</h2>
+                <div class="technologies-grid">
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fab fa-html5 text-2xl text-purple-400 mb-2"></i>
+                        <p>HTML5</p>
+                    </div>
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fab fa-css3-alt text-2xl text-purple-400 mb-2"></i>
+                        <p>CSS3</p>
+                    </div>
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fab fa-js text-2xl text-purple-400 mb-2"></i>
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fab fa-react text-2xl text-purple-400 mb-2"></i>
+                        <p>React</p>
+                    </div>
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="500">
+                        <i class="fab fa-vuejs text-2xl text-purple-400 mb-2"></i>
+                        <p>Vue.js</p>
+                    </div>
+                    <div class="tech-item" data-aos="fade-up" data-aos-delay="600">
+                        <i class="fab fa-node text-2xl text-purple-400 mb-2"></i>
+                        <p>Node.js</p>
+                    </div>
+                </div>
+
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold mb-8 text-center" data-aos="fade-up">Testimonials</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                            <p class="text-gray-300 mb-4">"Rayy is an exceptional developer who delivered our project on time and exceeded our expectations. Their attention to detail and problem-solving skills are outstanding."</p>
+                            <div class="flex items-center">
+                                <img src="/api/placeholder/50/50" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-semibold">John Smith</h4>
+                                    <p class="text-purple-400">CEO, Tech Corp</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                            <p class="text-gray-300 mb-4">"Working with Rayy was a great experience. They brought creative solutions to our project and were always professional and responsive."</p>
+                            <div class="flex items-center">
+                                <img src="/api/placeholder/50/50" alt="Client" class="w-12 h-12 rounded-full mr-4">
+                                <div>
+                                    <h4 class="font-semibold">Sarah Johnson</h4>
+                                    <p class="text-purple-400">Product Manager, Design Studio</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.transform = `scaleX(${scrolled / 100})`;
+        });
+
+        // Active nav link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
